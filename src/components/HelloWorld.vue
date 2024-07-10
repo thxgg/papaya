@@ -1,9 +1,30 @@
 <script setup lang="ts">
+import { z } from 'zod'
+import { ref } from 'vue'
+import consola from 'consola'
 import Button from './ui/button/Button.vue'
 
 defineProps<{
   msg: string
 }>()
+
+const schema = z.string({
+  required_error: 'This field is required',
+}).min(5, {
+  message: 'This field must be at least 5 characters',
+})
+const text = ref()
+const errors = ref<string[]>([])
+
+function validate() {
+  const res = schema.safeParse(text.value)
+  if (!res.success) {
+    errors.value = res.error.format()._errors
+  }
+  else {
+    errors.value = []
+  }
+}
 </script>
 
 <template>
@@ -14,7 +35,13 @@ defineProps<{
     <h2 class="text-3xl text-sky-700">
       Hi
     </h2>
-    <Button>{{ $t('hello') }}</Button>
+    <input v-model="text">
+    <Button @click="validate">
+      {{ $t('hello') }}
+    </Button>
+    <pre>
+    {{ errors }}
+    </pre>
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
