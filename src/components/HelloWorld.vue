@@ -14,7 +14,7 @@ defineProps<{
     <h2 class="text-3xl text-sky-700">
       Hi
     </h2>
-    <Button>Click me</Button>
+    <Button>{{ $t('hello') }}</Button>
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
