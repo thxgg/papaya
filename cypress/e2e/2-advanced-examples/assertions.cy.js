@@ -128,15 +128,15 @@ context('Assertions', () => {
       /**
        * Text from the first element.
        * @type {string}
-      */
+       */
       let text
 
       /**
        * Normalizes passed text,
        * useful before comparing text with spaces and different capitalization.
        * @param {string} s Text to normalize
-      */
-      const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+       */
+      const normalizeText = s => s.replace(/\s/g, '').toLowerCase()
 
       cy.get('.two-elements')
         .find('.first')
@@ -167,7 +167,7 @@ context('Assertions', () => {
     it('retries the should callback until assertions pass', () => {
       cy.get('#random-number')
         .should(($div) => {
-          const n = parseFloat($div.text())
+          const n = Number.parseFloat($div.text())
 
           expect(n).to.be.gte(1).and.be.lte(10)
         })
